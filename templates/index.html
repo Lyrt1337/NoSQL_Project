@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezeptsuche</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>🍽️ Rezeptdatenbank</h1>
+
+    <a href="/add" class="button">➕ Neues Rezept</a>
+    <br>
+    <br>
+
+    <form method="get">
+        <div class="form-row">
+            <div class="form-group">
+                <input type="text" name="recipe_name" placeholder="Rezeptname suchen..." value="{{ recipe_name }}">
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="q" placeholder="Zutat suchen..." value="{{ query }}">
+            </div>
+
+            <div class="form-group">
+                <select name="category">
+                    <option value="">Alle Kategorien</option>
+                    {% for category in categories %}
+                        <option value="{{ category['_id'] }}" {% if selected == category['_id'] %}selected{% endif %}>
+                            {{ category['category_name'] }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="button">Suchen</button>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+    {% if recipes %}
+    <div class="recipe-grid">
+        {% for recipe in recipes %}
+            <div class="recipe-box">
+                <a href="/view/{{ recipe._id }}">
+                    <strong>{{ recipe.name }}</strong>
+                </a>
+                <p>⏱️ {{ recipe.total_time }} Minuten</p>
+                <p>⭐ {{ recipe.avg_rating if recipe.avg_rating is not none else 'Kein Rating' }}</p>
+                <p>🍽️ {{ recipe.servings }} Portionen</p>
+                <p><em>Kategorie(n): {{ recipe.categories }}</em></p>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Keine Rezepte gefunden.</p>
+    {% endif %}
+</body>
+</html>

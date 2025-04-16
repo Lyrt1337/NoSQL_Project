@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>{{ recipe.name }}</h1>
+
+    <div class="recipe-container">
+        <div class="recipe-info">
+            <p><strong>Vorbereitungszeit:</strong> {{ recipe.prep_time if recipe.prep_time else 'Nicht angegeben' }}</p>
+            <p><strong>Kochzeit:</strong> {{ recipe.cook_time if recipe.cook_time else 'Nicht angegeben' }}</p>
+            <p><strong>Gesamtzeit:</strong> {{ recipe.total_time if recipe.total_time else 'Nicht angegeben' }}</p>
+            <p><strong>Portionen:</strong> {{ recipe.servings if recipe.servings else 'Nicht angegeben' }}</p>
+            <p><strong>Kategorie(n):</strong> {{ recipe.categories if recipe.categories else 'Nicht angegeben' }}</p>
+            <p><strong>Bewertung:</strong> {% if avg_rating %} ⭐ {{ "%.1f"|format(avg_rating) }} {% else %} Keine Bewertung {% endif %}</p>
+            
+            <br>
+            <h3>Zutaten:</h3>
+            <ul>
+                {% for ingredient in recipe.ingredients %}
+                    <li>{{ ingredient }}</li>
+                {% endfor %}
+    </ul>
+        </div>
+
+        <div class="recipe-image">
+            {% if recipe.image_url %}
+                <img src="{{ recipe.image_url }}" alt="Bild von {{ recipe.name }}">
+            {% else %}
+                <p>Kein Bild verfügbar</p>
+            {% endif %}
+        </div>
+    </div>
+
+    
+
+    <h3>Zubereitung:</h3>
+    <p>{{ recipe.directions }}</p>
+    <br>
+
+    <a href="/edit/{{ recipe._id }}" class="button">Bearbeiten</a>
+    <a href="/delete/{{ recipe._id }}" class="button danger">Löschen</a>
+    <br><br>
+    <a href="{{ url_for('write_review', id=recipe._id) }}" class="button">Review schreiben</a>
+    <br><br>
+    <a href="/" class="button">Zurück zur Übersicht</a>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Neues Rezept hinzufügen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>➕ Neues Rezept</h1>
+
+    <form method="POST">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Vorbereitungszeit (Minuten):</label>
+            <input type="number" name="prep_time">
+        </div>
+
+        <div class="form-group">
+            <label>Kochzeit (Minuten):</label>
+            <input type="number" name="cook_time">
+        </div>
+
+        <div class="form-group">
+            <label>Gesamtzeit (Minuten):</label>
+            <input type="number" name="total_time">
+        </div>
+
+        <div class="form-group">
+            <label>Portionen:</label>
+            <input type="number" name="servings">
+        </div>
+
+        <div class="form-group full-width">
+            <label>Zutaten (eine pro Zeile):</label>
+            <textarea name="ingredients" rows="5"></textarea>
+        </div>
+
+        <div class="form-group full-width">
+            <label>Zubereitungsschritte:</label>
+            <textarea name="directions" rows="5"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Kategorie:</label>
+            <select name="category_id" id="category">
+                <option value="">-- Bitte wählen --</option>
+                {% for category in categories %}
+                    <option value="{{ category._id }}">{{ category.category_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Neues Input-Feld für die Bild-URL -->
+        <div class="form-group">
+            <label>Bild-URL:</label>
+            <input type="text" name="image_url" placeholder="Bild-URL hier einfügen" />
+        </div>
+
+        <button type="submit" class="button">Hinzufügen</button>
+    </form>
+
+    <a href="/">Zurück zur Übersicht</a>
+</body>
+</html>

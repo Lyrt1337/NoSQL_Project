@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezept löschen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>⚠️ Rezept löschen</h1>
+
+    <p>Möchtest du das Rezept <strong>{{ recipe.name }}</strong> wirklich löschen?</p>
+
+    <form method="POST">
+        <button type="submit" class="button danger">🗑️ Löschen</button>
+    </form>
+
+    <br>
+    <a href="/" class="button">Zurück</a>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezept bearbeiten</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Rezept bearbeiten: {{ recipe.name }}</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" value="{{ recipe['name'] }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Vorbereitungszeit:</label>
+            <input type="text" name="prep_time" value="{{ recipe['prep_time'] }}">
+        </div>
+
+        <div class="form-group">
+            <label>Kochzeit:</label>
+            <input type="text" name="cook_time" value="{{ recipe['cook_time'] }}">
+        </div>
+
+        <div class="form-group">
+            <label>Gesamtzeit:</label>
+            <input type="text" name="total_time" value="{{ recipe['total_time'] }}">
+        </div>
+
+        <div class="form-group">
+            <label>Portionen:</label>
+            <input type="number" name="servings" value="{{ recipe['servings'] }}">
+        </div>
+
+        <div class="form-group">
+            <label>Kategorie:</label>
+            <select name="category_id">
+                {% for category in categories %}
+                    <option value="{{ category['_id'] }}" {% if recipe['category_id'] == category['_id'] %}selected{% endif %}>
+                        {{ category['category_name'] }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group full-width">
+            <label>Zutaten (eine pro Zeile):</label>
+            <textarea name="ingredients" rows="6" style="width: 100%;">{{ ingredients }}</textarea>
+
+        </div>
+
+        <div class="form-group full-width">
+            <label>Zubereitung (eine Zeile pro Schritt):</label>
+            <textarea name="directions" rows="10" style="width: 100%;">{{ directions }}</textarea>
+        </div>
+
+        <h2>Reviews</h2>
+        {% for review in reviews %}
+            <div class="review-box">
+                <div class="form-group full-width">
+                    <label>Kommentar von {{ review.user }}:</label>
+                    <textarea name="comment_{{ review._id }}" style="width: 100%;">{{ review.comment }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Bewertung:</label>
+                    <br>
+                    <input type="number" step="0.1" name="rating_{{ review._id }}" value="{{ review.rating }}">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="delete_review_{{ review._id }}">
+                        Review löschen
+                    </label>
+                </div>
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="button">Speichern</button>
+    </form>
+
+    <a href="/view/{{ recipe._id }}">Abbrechen</a>
+</body>
+</html>
