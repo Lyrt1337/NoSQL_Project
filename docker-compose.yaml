@@ -1,4 +1,4 @@
-# version: "3.8"
+version: "3.8"
 
 services:
   mongodb:
@@ -20,6 +20,7 @@ services:
       - MONGO_URI=mongodb://mongodb:27017
     depends_on:
       - mongodb
+    entrypoint: ["/usr/local/bin/wait-for-it.sh", "mongodb:27017", "--", "python", "/app/init_script.py", "&&", "python", "/app/app.py"]
 
 volumes:
   mongo_data:
