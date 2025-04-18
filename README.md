@@ -17,7 +17,7 @@ Ein NoSQL_Project zur Verwaltung von Rezepten – komplett mit Zutaten, Kategori
 
 | Komponente         | Beschreibung                                                                 |
 |--------------------|------------------------------------------------------------------------------|
-| 🐍 **Python**       | Hauptsprache für Backend und Datenaufbereitung                              |
+| 🐍 **Python 3.11**       | Hauptsprache für Backend und Datenaufbereitung                              |
 | 🌐 **Flask**        | Web-Framework für das Frontend & Routing                                     |
 | 🍃 **MongoDB**      | NoSQL-Datenbank zur Speicherung der Rezepte und Metadaten                   |
 | 🐳 **Docker**       | MongoDB läuft in einem Docker-Container  |
@@ -40,22 +40,25 @@ Die Daten sind in vier collections strukturiert:
 
 1. **MongoDB und Docker starten**
 
-- build docker
+- starte docker engine (Docker Desktop)
+- build docker <br>
+startet Docker mit MongoDB und lädt die Daten von csv
 
     ```bash
     docker-compose up --build -d
 
-2. Flask-app ausführen `app.py`
-3. App aufrufen: http://localhost:5000
+2. **Flask-app ausführen `app.py`**
+3. **App aufrufen: http://localhost:5000**
 <br><br>
 
-6. Docker stoppen und erneut starten
+4. **Docker stoppen und erneut starten**
 - stoppen
 
    ```bash
    docker-compose down
 
-- erneut starten
+- erneut starten <br>
+Daten werden nicht erneut von csv geladen, Daten sind persistent in MongoDB
 
    ```bash
    docker-compose up -d
