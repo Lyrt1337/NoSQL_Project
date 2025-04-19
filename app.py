@@ -185,7 +185,7 @@ def edit_recipe(id):
             delete_field = f"delete_review_{review['_id']}"
             if delete_field in request.form:
                 db.reviews.delete_one({"_id": review["_id"]})
-                continue  # Überspringe Update, wenn gelöscht
+                continue
 
             comment_field = f"comment_{review['_id']}"
             rating_field = f"rating_{review['_id']}"
@@ -231,7 +231,7 @@ def delete_recipe(id):
 
         db.reviews.delete_many({"recipe_id": id})
 
-        return redirect("/")  # Zurück zur Startseite
+        return redirect("/")
 
     return render_template("delete.html", recipe=recipe)
 
