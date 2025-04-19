@@ -2,25 +2,22 @@ import csv
 import os
 from pymongo import MongoClient
 
-# Stelle sicher, dass der Pfad zu den CSV-Dateien korrekt ist
-data_path = "data"  # Passe diesen Pfad an, je nachdem, wo die CSV-Dateien im Container liegen
+data_path = "data"
 
-# Überprüfe, ob der Pfad existiert
 if not os.path.exists(data_path):
     print(f"Das Verzeichnis {data_path} existiert nicht!")
     exit(1)
 
-# MongoDB-Verbindung herstellen
 try:
     client = MongoClient("mongodb://mongodb:27017")
     db = client["nosql_project"]
     print("MongoDB-Verbindung erfolgreich!")
-    print(client.server_info())  # Teste die Verbindung
+    print(client.server_info())
 except Exception as e:
     print(f"Fehler beim Verbinden mit MongoDB: {e}")
     exit(1)
 
-# Datenbank leeren
+
 db.categories.drop()
 db.recipes.drop()
 db.ingredients.drop()
